@@ -25,6 +25,7 @@ app.get("/", (c) => {
   return c.json({
     message: "Tech Spot Backend API",
     products: "/products",
+    user: "/users",
   });
 });
 
