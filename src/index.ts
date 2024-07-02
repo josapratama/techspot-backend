@@ -44,6 +44,29 @@ app.get("/products", async (c) => {
   return c.json(products);
 });
 
+app.get("/products/:slug", async (c) => {
+  const slug = c.req.param("slug");
+
+  const product = await prisma.product.findUnique({
+    where: { slug },
+    select: {
+      slug: true,
+      name: true,
+      imageURL: true,
+      price: true,
+      description: true,
+      sku: true,
+    },
+  });
+
+  if (!product) {
+    c.status(404);
+    c.json({ message: "User not found" });
+  }
+
+  return c.json(product);
+});
+
 app.get("/users", async (c) => {
   const users = await prisma.user.findMany({
     select: {
